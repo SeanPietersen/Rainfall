@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Rainfall.App
@@ -54,7 +55,7 @@ namespace Rainfall.App
 
                 foreach (var rainfallValue in rainfall)
                 {
-                    sumOfSquareOfMeanMinusRainfall += (mean - rainfallValue) * (mean - rainfallValue);
+                    sumOfSquareOfMeanMinusRainfall += Math.Pow((mean - rainfallValue),2);
                 }
 
                 return sumOfSquareOfMeanMinusRainfall / (rainfall.Length);
