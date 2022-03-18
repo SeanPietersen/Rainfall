@@ -5,61 +5,64 @@ namespace Rainfall.App
 {
     public class RainfallCalculator : IRainfallCalculator
     {
-        private double[] extractedRainfalls(string townData)
+        private double[] extractedRainfalls(string town, string strng)
         {
             List<double> rainfall = new List<double>();
 
-            string[] monthWithRainfall = townData.Split(":")[1].Split(",");
+            List<double> emptyList = new List<double>();
 
-            foreach (var month in monthWithRainfall)
-            {
-                string rainfallString = month.Split(" ")[1];
-
-                rainfall.Add(double.Parse(rainfallString, System.Globalization.CultureInfo.InvariantCulture));
-            }
-
-            return rainfall.ToArray();
-        }
-
-        public double Mean(string town, string strng)
-        {
             string[] townDataArray = strng.Split("\n");
 
             foreach (var townData in townDataArray)
             {
+                string[] monthWithRainfall = townData.Split(":")[1].Split(",");
+
                 if (townData.Split(":")[0].Equals(town))
                 {
-                    double[] rainfall = extractedRainfalls(townData);
+                    foreach (var month in monthWithRainfall)
+                    {
+                        string rainfallString = month.Split(" ")[1];
 
-                    double sum = rainfall.Sum();
+                        rainfall.Add(double.Parse(rainfallString, System.Globalization.CultureInfo.InvariantCulture));
+                    }
 
-                    return sum / (rainfall.Length);
+                    return rainfall.ToArray();
                 }
+            }
+            
+            return emptyList.ToArray();
+        }
+
+        public double Mean(string town, string strng)
+        {
+            double[] rainfall = extractedRainfalls(town, strng);
+
+            if (rainfall.Length > 0)
+            {
+                double sum = rainfall.Sum();
+
+                return sum / (rainfall.Length);
             }
             return -1;
         }
 
         public double Variance(string town, string strng)
         {
-            string[] townDataArray = strng.Split("\n");
+            double[] rainfall = extractedRainfalls(town, strng);
 
-            foreach (var townData in townDataArray)
+            if (rainfall.Length > 0)
             {
-                if (townData.Split(":")[0].Equals(town))
+                double mean = rainfall.Sum() / (rainfall.Length);
+
+                double sumOfSquareOfMeanMinusRainfall = 0;
+
+                foreach (var rainfallValue in rainfall)
                 {
-                    double[] rainfall = extractedRainfalls(townData);
-
-                    double mean = rainfall.Sum() / (rainfall.Length);
-
-                    double sumOfSquareOfMeanMinusRainfall = 0;
-
-                    foreach (var rainfallValue in rainfall)
-                    {
-                        sumOfSquareOfMeanMinusRainfall += (mean - rainfallValue) * (mean - rainfallValue);
-                    }
-
-                    return sumOfSquareOfMeanMinusRainfall / (rainfall.Length);
+                    sumOfSquareOfMeanMinusRainfall += (mean - rainfallValue) * (mean - rainfallValue);
                 }
+
+                return sumOfSquareOfMeanMinusRainfall / (rainfall.Length);
+
             }
             return -1.0;
         }
