@@ -9,8 +9,6 @@ namespace Rainfall.App
         {
             List<double> rainfall = new List<double>();
 
-            List<double> emptyList = new List<double>();
-
             string[] townDataArray = strng.Split("\n");
 
             foreach (var townData in townDataArray)
@@ -25,12 +23,10 @@ namespace Rainfall.App
 
                         rainfall.Add(double.Parse(rainfallString, System.Globalization.CultureInfo.InvariantCulture));
                     }
-
-                    return rainfall.ToArray();
                 }
             }
-            
-            return emptyList.ToArray();
+
+            return rainfall.ToArray();
         }
 
         public double Mean(string town, string strng)
