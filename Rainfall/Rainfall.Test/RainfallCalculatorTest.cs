@@ -1,3 +1,4 @@
+using Rainfall.App;
 using System;
 using Xunit;
 
@@ -84,6 +85,19 @@ namespace Rainfall.Test
 
             //Assert
             assertFuzzyEquals(meanResult, 52.416666666666664);
+        }
+
+        [Fact]
+        public void MeanTest3()
+        {
+            //Arrange
+            IRainfallCalculator rainfallCalculator = new RainfallCalculator();
+
+            //Act
+            var meanResult = rainfallCalculator.Mean("South Africa", data);
+
+            //Assert
+            assertFuzzyEquals(meanResult, -1);
         }
 
         [Fact]
