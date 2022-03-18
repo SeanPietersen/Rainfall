@@ -27,7 +27,7 @@ namespace Rainfall.App
 
             foreach (var townData in townDataArray)
             {
-                if (townData.Contains(town))
+                if (townData.Split(":")[0].Equals(town))
                 {
                     double[] rainfall = extractedRainfalls(townData);
 
@@ -45,7 +45,7 @@ namespace Rainfall.App
 
             foreach (var townData in townDataArray)
             {
-                if (townData.Contains(town))
+                if (townData.Split(":")[0].Equals(town))
                 {
                     double[] rainfall = extractedRainfalls(townData);
 
