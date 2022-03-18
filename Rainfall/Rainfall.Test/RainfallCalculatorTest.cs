@@ -120,10 +120,23 @@ namespace Rainfall.Test
             IRainfallCalculator rainfallCalculator = new RainfallCalculator();
 
             //Act
-            var varianceResult = rainfallCalculator.Mean("Beijing", data);
+            var varianceResult = rainfallCalculator.Variance("Beijing", data);
 
             //Assert
             assertFuzzyEquals(varianceResult, 4808.37138888889);
+        }
+
+        [Fact]
+        public void VarianceTest3()
+        {
+            //Arrange
+            IRainfallCalculator rainfallCalculator = new RainfallCalculator();
+
+            //Act
+            var varianceResult = rainfallCalculator.Variance("South Africa", data);
+
+            //Assert
+            assertFuzzyEquals(varianceResult, -1.0);
         }
     }
 }
